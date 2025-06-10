@@ -6,8 +6,10 @@
   min-height: 100vh;
   position: relative;
   padding: 1rem 2rem 2rem 2rem;
-  /* Reduced top padding from 2rem to 1rem */
-  background: linear-gradient(rgba(255, 245, 238, 0.95), rgba(255, 245, 238, 0.95));
+  background: linear-gradient(
+    rgba(255, 245, 238, 0.95),
+    rgba(255, 245, 238, 0.95)
+  );
   overflow: hidden;
 }
 
@@ -15,18 +17,16 @@
   position: relative;
   margin-bottom: 2rem;
   margin-top: -20px;
+  margin-left: auto;
+  margin-right: auto;
   animation: float 4s ease-in-out infinite;
   z-index: 2;
-
-  /* Gradient background */
   background: linear-gradient(135deg, #800000, #b22222, #8b0000);
   padding: clamp(1rem, 5vw, 2rem);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* Optional glow effect */
   box-shadow: 10px 10px 50px rgba(139, 0, 0, 0.5);
   aspect-ratio: 1 / 1;
   width: clamp(150px, 30vw, 250px);
@@ -38,39 +38,53 @@
   height: auto;
   max-width: 100%;
   object-fit: contain;
-  /* Ensures image scales within without cropping */
   filter: brightness(0.3);
   opacity: 0.4;
   animation: brightenUp 6s ease forwards;
   transition: filter 0.3s ease;
 }
 
-
-/* Glowing ring aura effect */
+/* Glowing ring aura */
 .logo-aura {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 300px;
   height: 300px;
-  border: 2px solid rgba(139, 0, 0, 0.3);
+  /* border: 2px solid rgba(139, 0, 0, 0.3); */
   border-radius: 50%;
   transform: translate(-50%, -50%);
   animation: rotateAura 10s linear infinite;
   z-index: 0;
 }
 
-
-/* Animations */
 @keyframes brightenUp {
   0% {
     filter: brightness(0.3);
     opacity: 0.4;
   }
-
   100% {
     filter: brightness(1);
     opacity: 1;
+  }
+}
+
+@keyframes rotateAura {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }
 
@@ -79,13 +93,13 @@
   flex-direction: column;
   align-items: center;
   gap: 5px;
+  position: relative;
 }
 
 .restaurant-title {
-  color: #8B0000;
+  color: #8b0000;
   font-weight: bold;
   font-size: 4.5rem;
-
   text-align: center;
   font-family: serif;
   text-shadow: 2px 2px 4px rgba(139, 0, 0, 0.2);
@@ -94,14 +108,14 @@
 }
 
 .title-container::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
   width: 60px;
   height: 3px;
-  background-color: #8B0000;
+  background-color: #8b0000;
   transition: width 0.3s ease;
 }
 
@@ -111,7 +125,7 @@
 
 .gallery-section {
   padding: 4rem 0;
-  background: #FFF5EE;
+  background: #fff5ee;
 }
 
 .image-card {
@@ -121,11 +135,7 @@
   box-shadow: 0 10px 30px rgba(139, 0, 0, 0.1);
   transition: all 0.5s ease;
   cursor: pointer;
-}
-
-.image-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(139, 0, 0, 0.2);
+  /* Removed transform and box-shadow hover effects as they're now handled by Framer Motion */
 }
 
 .image-card:hover .card-image {
@@ -165,7 +175,7 @@
   left: 0;
   right: 0;
   padding: 2rem;
-  color: #FFF5EE;
+  color: #fff5ee;
   transform: translateY(20px);
   opacity: 0;
   transition: all 0.3s ease;
@@ -182,6 +192,15 @@
   opacity: 0.9;
 }
 
+/* Enhanced hover effects for better performance with Framer Motion */
+.image-card {
+  will-change: transform;
+}
+
+.image-card:hover {
+  box-shadow: 0 20px 40px rgba(139, 0, 0, 0.2);
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
   .restaurant-title {
@@ -191,11 +210,6 @@
 
   .logo-image {
     width: 150px;
-  }
-
-  .logo-background {
-    width: 200px;
-    height: 200px;
   }
 
   .card-image {
@@ -211,11 +225,6 @@
 
   .logo-image {
     width: 120px;
-  }
-
-  .logo-background {
-    width: 160px;
-    height: 160px;
   }
 
   .card-image {

@@ -11,23 +11,10 @@
   margin-bottom: 40px;
   font-weight: bold;
   position: relative;
-  opacity: 0;
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .section-title::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -10px;
   left: 50%;
@@ -65,7 +52,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  transition: transform 0.5s ease-in-out;
   will-change: transform;
 }
 
@@ -73,7 +59,6 @@
   width: 100%;
   height: 400px;
   object-fit: cover;
-  transition: transform 0.5s ease;
 }
 
 .carousel-caption {
@@ -84,12 +69,6 @@
   background: rgba(139, 0, 0, 0.8);
   padding: 20px;
   color: var(--primary-ivory);
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
-}
-
-.carousel-item.active .carousel-caption {
-  transform: translateY(0);
 }
 
 .carousel-caption h3 {
@@ -118,13 +97,13 @@
   transition: all 0.3s ease;
   z-index: 2;
   opacity: 0.7;
+  will-change: transform;
 }
 
 .carousel-prev:hover,
 .carousel-next:hover {
   background: rgba(139, 0, 0, 0.9);
   opacity: 1;
-  transform: translateY(-50%) scale(1.1);
 }
 
 .carousel-prev {
@@ -159,7 +138,7 @@
 }
 
 .menu-category h3::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -10px;
   left: 50%;
@@ -189,11 +168,12 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   transform: translateZ(0); /* Hardware acceleration */
   margin-bottom: 30px;
+  will-change: transform; /* Optimize for Framer Motion animations */
 }
 
-.menu-item:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+/* Removed CSS hover effects as they're now handled by Framer Motion */
+.menu-item:hover .menu-item-image {
+  transform: scale(1.05);
 }
 
 .menu-item-image {
@@ -203,10 +183,6 @@
   border-radius: 15px;
   transition: transform 0.3s ease;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.menu-item:hover .menu-item-image {
-  transform: scale(1.05);
 }
 
 .menu-item h4 {
@@ -242,7 +218,7 @@
 }
 
 .menu-item-title {
-  color: #8B0000;
+  color: #8b0000;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
@@ -260,15 +236,15 @@
 }
 
 .menu-item-price {
-  color: #8B0000;
+  color: #8b0000;
   font-weight: bold;
   font-size: 1.25rem;
   margin-bottom: 0;
 }
 
 .btn-danger {
-  background-color: #8B0000;
-  border-color: #8B0000;
+  background-color: #8b0000;
+  border-color: #8b0000;
 }
 
 .btn-danger:hover {
@@ -283,6 +259,15 @@
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 15px;
+}
+
+/* Enhanced performance optimizations for Framer Motion */
+.carousel-item,
+.menu-item,
+.carousel-prev,
+.carousel-next {
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 /* Responsive adjustments */
@@ -355,13 +340,13 @@
 }
 
 .menu-section {
-  background-color: #FFF5EE;
+  background-color: #fff5ee;
   min-height: 100vh;
   padding: 4rem 0;
 }
 
 .menu-title {
-  color: #8B0000;
+  color: #8b0000;
   text-align: center;
   font-weight: bold;
   margin-bottom: 3rem;
@@ -376,12 +361,12 @@
   transform: translateX(-50%);
   width: 80px;
   height: 3px;
-  background-color: #8B0000;
+  background-color: #8b0000;
 }
 
 .menu-tabs .nav-link {
-  color: #8B0000;
-  border: 2px solid #8B0000;
+  color: #8b0000;
+  border: 2px solid #8b0000;
   margin: 0 0.5rem;
   padding: 0.5rem 1.5rem;
   border-radius: 25px;
@@ -393,17 +378,17 @@
 }
 
 .menu-tabs .nav-link.active {
-  background-color: #8B0000;
-  color: #FFF5EE;
+  background-color: #8b0000;
+  color: #fff5ee;
 }
 
 .menu-card {
-  background-color: #FFF5EE;
+  background-color: #fff5ee;
   color: #333;
   transition: all 0.3s ease-in-out;
   border-radius: 12px;
   overflow: hidden;
-  border: 2px solid #8B0000;
+  border: 2px solid #8b0000;
   box-shadow: 0 4px 15px rgba(139, 0, 0, 0.1);
 }
 
@@ -433,28 +418,3 @@
   height: 100%;
   object-fit: cover;
 }
-
-.menu-item-title {
-  color: #8B0000;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.menu-item-category {
-  color: #666;
-  font-style: italic;
-  text-transform: capitalize;
-}
-
-.menu-item-description {
-  color: #333;
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-
-.menu-item-price {
-  color: #8B0000;
-  font-weight: bold;
-  font-size: 1.25rem;
-  margin-bottom: 0;
-} 
