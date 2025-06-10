@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { submitContactForm } from "../api"; // Adjust the path based on your file structure
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -48,16 +48,8 @@ const Contact = () => {
     try {
       console.log("Sending contact form data:", data);
 
-      const response = await axios.post(
-        "https://restaurant1-cr9i.onrender.com/api/contact",
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          timeout: 70000, // 70 seconds timeout (longer than Render's 50+ seconds)
-        }
-      );
+      // Using the api function instead of direct axios call
+      const response = await submitContactForm(data);
 
       console.log("Form submitted successfully:", response.data);
 
