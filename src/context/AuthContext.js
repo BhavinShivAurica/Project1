@@ -1,4 +1,3 @@
-// src/context/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
@@ -11,7 +10,8 @@ export const useAuth = () => {
   return context;
 };
 
-const API_URL = process.env.REACT_APP_API_URL;
+// Use your existing environment variable that already includes /api
+const API_URL = process.env.REACT_APP_API_URL || "https://restaurant1-cr9i.onrender.com/api";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -21,14 +21,23 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     const userData = localStorage.getItem("user");
     if (token && userData) {
-      setUser(JSON.parse(userData));
+      try {
+        setUser(JSON.parse(userData));
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      }
     }
     setLoading(false);
   }, []);
 
   const login = async (email, password) => {
     try {
-      const response = await fetch(`${API_URL}/api/auth/login`, {
+      console.log("API_URL:", API_URL); // Debug log
+      console.log("Attempting login to:", `${API_URL}/auth/login`);
+      
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,16 +45,28 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        setUser(data.user);
-        return true;
-      } else {
-        throw new Error(data.message);
+      console.log("Response status:", response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Response error:", errorText);
+        
+        let errorMessage;
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.message || "Login failed";
+        } catch {
+          errorMessage = "Server error - please try again";
+        }
+        throw new Error(errorMessage);
       }
+
+      const data = await response.json();
+      
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      setUser(data.user);
+      return true;
     } catch (error) {
       console.error("Login error:", error);
       throw error;
@@ -54,7 +75,10 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (name, email, password) => {
     try {
-      const response = await fetch(`${API_URL}/api/auth/signup`, {
+      console.log("API_URL:", API_URL); // Debug log
+      console.log("Attempting signup to:", `${API_URL}/auth/signup`);
+      
+      const response = await fetch(`${API_URL}/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,13 +86,24 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ name, email, password }),
       });
 
-      const data = await response.json();
+      console.log("Response status:", response.status);
 
-      if (response.ok) {
-        return true;
-      } else {
-        throw new Error(data.message);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Response error:", errorText);
+        
+        let errorMessage;
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage = errorData.message || "Signup failed";
+        } catch {
+          errorMessage = "Server error - please try again";
+        }
+        throw new Error(errorMessage);
       }
+
+      const data = await response.json();
+      return true;
     } catch (error) {
       console.error("Signup error:", error);
       throw error;
