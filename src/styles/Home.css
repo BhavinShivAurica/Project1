@@ -19,7 +19,7 @@
   margin-top: -20px;
   margin-left: auto;
   margin-right: auto;
-  animation: float 4s ease-in-out infinite;
+/*   animation: float 4s ease-in-out infinite; */
   z-index: 2;
   background: linear-gradient(135deg, #800000, #b22222, #8b0000);
   padding: clamp(1rem, 5vw, 2rem);
