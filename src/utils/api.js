@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
+  baseURL: process.env.REACT_APP_API_URL || "https://restaurant1-cr9i.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -35,9 +35,9 @@ export const cancelOrder = (orderId) => api.patch(`/orders/${orderId}/cancel`);
 export const submitContactForm = (formData) =>
   api.post("/contact", formData);
 
-// Auth API calls
+// Auth API calls - FIXED TO MATCH BACKEND
 export const login = (credentials) => api.post("/auth/login", credentials);
-export const register = (userData) => api.post("/auth/register", userData);
+export const signup = (userData) => api.post("/auth/signup", userData); // Changed from register to signup
 export const getUserProfile = () => api.get("/auth/profile");
 export const updateUserProfile = (userData) =>
   api.patch("/auth/profile", userData);
