@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:3000/api",
+  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -33,11 +33,11 @@ export const cancelOrder = (orderId) => api.patch(`/orders/${orderId}/cancel`);
 
 // Contact API calls
 export const submitContactForm = (formData) =>
-  api.post("api/contact", formData);
+  api.post("/contact", formData);
 
 // Auth API calls
-export const login = (credentials) => api.post("api/auth/login", credentials);
-export const register = (userData) => api.post("api/auth/register", userData);
+export const login = (credentials) => api.post("/auth/login", credentials);
+export const register = (userData) => api.post("/auth/register", userData);
 export const getUserProfile = () => api.get("/auth/profile");
 export const updateUserProfile = (userData) =>
   api.patch("/auth/profile", userData);
